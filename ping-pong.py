@@ -13,8 +13,12 @@ speed_y=3
 X=350
 Y=250
 
-Y1=0
-Y2=680
+Y1=150
+Y2=150
+
+font.init()
+font2 = font.Font(None, 70)
+lost= 0 
 
 while game:
     for e in event.get():
@@ -25,17 +29,22 @@ while game:
     FPS=60
     clock.tick(FPS)
     draw.circle(window, white, (X, Y),30)
-    draw.rect(window, white, (Y1, 150, 15, 150))
-    draw.rect(window, white, (Y2, 150, 15, 150))
+    draw.rect(window, white, (0, Y2, 15, 150))
+    draw.rect(window, white, (685, Y1, 15, 150))
     X+=speed_x
     Y+=speed_y
-    print(speed_y)
     display.update()
     #rect moving
     keys_pressed= key.get_pressed()
-    if keys_pressed[K_w]:
-        Y1=-3
-
+    if keys_pressed[K_w] and Y1 > 0:
+        Y1-=3
+    if keys_pressed[K_s] and Y1 < 350:
+        Y1+=3
+    if keys_pressed[K_UP] and Y2 >0:
+        Y2-=3
+    if keys_pressed[K_DOWN] and Y2 < 350:
+        Y2+=3
+    text_lose= font2.render('Пропущено: ' + str(lost), 1, (255,255,255))
     #circle moving
     if Y>450:
         speed_y=-3
